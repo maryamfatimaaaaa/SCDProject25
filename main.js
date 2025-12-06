@@ -16,7 +16,7 @@ function menu() {
 4. Delete Record
 5. Exit
 6. Search Records
-
+7. Sort Records
 =====================
   `);
 
@@ -100,6 +100,102 @@ function menu() {
     });
 
         break;
+
+      case '7':
+
+    console.log("Sort By:");
+
+    console.log("1. Name");
+
+    console.log("2. Creation Date");
+
+
+
+    rl.question("Choose field (1 or 2): ", field => {
+
+        rl.question("Order (asc/desc): ", order => {
+
+
+
+            const records = db.listRecords();
+
+
+
+            if (records.length === 0) {
+
+                console.log("No records to sort.");
+
+                return menu();
+
+            }
+
+
+
+            let sorted = [...records]; // clone array
+
+
+
+            // Sort by Name
+
+            if (field === '1') {
+
+                sorted.sort((a, b) => {
+
+                    if (order === 'desc')
+
+                        return b.name.localeCompare(a.name);
+
+                    else
+
+                        return a.name.localeCompare(b.name);
+
+                });
+
+            }
+
+
+
+            // Sort by Creation Date
+
+            else if (field === '2') {
+
+                sorted.sort((a, b) => {
+
+                    const d1 = new Date(a.createdAt);
+
+                    const d2 = new Date(b.createdAt);
+                    return order === 'desc' ? d2 - d1 : d1 - d2;
+
+                });
+
+            } else {
+
+                console.log("Invalid field!");
+
+                return menu();
+
+            }
+
+
+
+            console.log("\nSorted Records:");
+
+            sorted.forEach(r => {
+
+                console.log(`ID: ${r.id} | Name: ${r.name} | Created: ${r.createdAt}`);
+
+            });
+
+
+
+            menu();
+
+        });
+
+    });
+
+    break;
+
       default:
         console.log('Invalid option.');
         menu();
