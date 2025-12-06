@@ -17,6 +17,7 @@ function menu() {
 5. Exit
 6. Search Records
 7. Sort Records
+8. Export Data
 =====================
   `);
 
@@ -195,6 +196,60 @@ function menu() {
     });
 
     break;
+
+      case '8':
+
+    const fs = require('fs'); // at the top of main.js, if not already included
+
+    const allRecords = db.listRecords();
+
+    if (allRecords.length === 0) {
+
+        console.log('No records to export.');
+
+        menu();
+
+        break;
+
+    }
+
+
+
+    const now = new Date();
+
+    const header = `Export File: export.txt\nDate & Time: ${now.toLocaleString()}\nTotal Records: ${allRecords.length}\n-----------------------------\n`;
+
+    let content = header;
+
+
+
+    allRecords.forEach((r, index) => {
+
+        content += `${index + 1}. ID: ${r.id} | Name: ${r.name} | Created: ${r.creationDate} | Value: ${r.value}\n`;
+
+    });
+
+
+
+    fs.writeFile('export.txt', content, (err) => {
+
+        if (err) {
+
+            console.log('Error exporting data:', err);
+
+        } else {
+
+            console.log('Data exported successfully to export.txt.');
+
+        }
+
+        menu();
+
+    });
+
+    break;
+
+
 
       default:
         console.log('Invalid option.');
