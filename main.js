@@ -18,6 +18,8 @@ function menu() {
 6. Search Records
 7. Sort Records
 8. Export Data
+9. View Vault Status
+
 =====================
   `);
 
@@ -246,6 +248,26 @@ function menu() {
         menu();
 
     });
+
+    break;
+
+      case '9':   // Vault Statistics
+
+    const stats = db.getVaultStats();  // call the new function
+
+    console.log('Vault Statistics:\n--------------------------');
+
+    console.log(`Total Records: ${stats.totalRecords}`);
+
+    console.log(`Last Modified: ${stats.lastModified}`);
+
+    console.log(`Longest Name: ${stats.longestName} (${stats.longestNameLength} characters)`);
+
+    console.log(`Earliest Record: ${stats.earliestRecord}`);
+
+    console.log(`Latest Record: ${stats.latestRecord}`);
+
+    menu();
 
     break;
 
