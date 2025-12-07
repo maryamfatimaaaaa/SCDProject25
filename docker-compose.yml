@@ -1,0 +1,38 @@
+version: "3.9"
+
+services:
+  mongo:
+    image: mongo:6
+    container_name: backend-mongo
+    restart: unless-stopped
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - nodevault-net
+    ports:
+      - "27017:27017"
+
+  backend:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    image: backend:latest
+    container_name: backend-app
+    restart: unless-stopped
+    depends_on:
+      - mongo
+    environment:
+      - MONGO_URI=mongodb://backend-mongo:27017
+      - NODE_ENV=production
+      - PORT=3000
+    ports:
+      - "3000:3000"
+    networks:
+      - nodevault-net
+
+volumes:
+  mongo-data:
+
+networks:
+  nodevault-net:
+    driver: bridge
