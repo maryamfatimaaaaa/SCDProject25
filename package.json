@@ -1,6 +1,25 @@
 {
+  "name": "nodevault",
+  "version": "1.0.0",
+  "description": "NodeVault - Secure Record Management System",
+  "main": "main.js",
+  "scripts": {
+    "start": "node main.js",
+    "dev": "node main.js"
+  },
+  "keywords": [
+    "node",
+    "mongodb",
+    "vault",
+    "crud"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
   "dependencies": {
-    "dotenv": "^17.2.3",
-    "mongodb": "^7.0.0"
+    "dotenv": "^16.6.1",
+    "mongodb": "^6.21.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   }
 }
